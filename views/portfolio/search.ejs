@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-offset-5 col-md-3">
+        <% if (messages.length > 0) {%>
+        <% for (var i = 0; i < messages.length; ++i) {%>
+        <div class="alert alert-danger">
+            <%= messages %>
+        </div>
+        <% } %>
+        <% } %>
+        <div class="form-login">
+            <h4>Search Tokens</h4>
+            <label>Email: <%= email %></label><br>
+            <label>Name: <%= name %></label><br>
+            <label>Portfolio Name: <%= portfolioName %></label>
+            <form action="/user/register" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="wrapper">
+                    <span class="group-btn">
+                        <button type="submit" class="btn btn-primary btn-md">Register</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

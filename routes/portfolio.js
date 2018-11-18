@@ -8,12 +8,12 @@ const csrfProtect = csrf();
 
 router.use(csrfProtect);
 
-const title = 'User Managment';
+const title = 'Cryptocurrency Portfolio';
 
-router.get('/profile', isLoggedIn, (req, res, next) => {
+router.get('/search', isLoggedIn, (req, res, next) => {
     User.findOne({'_id': req.session.passport.user}, (err, user) => {
         if (err) return console.log(err);
-        res.render('user/profile', {title: title, email: user.email, name: user.name, portfolioName: user.portfolioName });
+        res.render('portfolio/search', {title: title, email: user.email, name: user.name, portfolioName: user.portfolioName });
     });
 });
 

@@ -18,6 +18,7 @@ const validator = require('express-validator');
 var indexRouter = require('./routes/index');
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
+var portfolioRouter = require('./routes/portfolio');
 
 var database = require('./database/database');
 
@@ -74,6 +75,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/post', postsRouter);
 app.use('/user', usersRouter);
+app.use('/portfolio', portfolioRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

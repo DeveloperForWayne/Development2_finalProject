@@ -1,4 +1,33 @@
-<div class="container">
-    <h1 class="text-center">My Profile</h1>
-</div>
+<div class="row">
+    <h1>Profile</h1>
+    <div class="col-md-9  admin-content">
 
+        <div class="panel panel-info" style="margin: 1em;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Name</h3>
+            </div>
+            <div class="panel-body">
+                <%= name %>
+            </div>
+        </div>
+        <div class="panel panel-info" style="margin: 1em;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Email</h3>
+            </div>
+            <div class="panel-body">
+                <%= email %>
+            </div>
+        </div>
+        <div class="panel panel-info" style="margin: 1em;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Portfolio Name:</h3>
+            </div>
+            <div class="panel-body">
+                <%= portfolioName %>
+                <form action="/portfolio/search" method="Get">
+                <button type="submit" class="btn btn-success btn-sm">Manage</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
