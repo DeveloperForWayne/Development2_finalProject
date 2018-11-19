@@ -56,6 +56,7 @@
                         <th>Value</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,6 +87,15 @@
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
                                 <button type="submit" class="btn btn-primary btn-md">Update Balance</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/portfolio/search" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="_method" value="PUT" />
+                                <input type="hidden" name="balance" value="<%= ticker[i].balance %>">
+                                <input type="hidden" name="tickerId" value="<%= ticker[i].tickerId %>" />
+                                <button class="btn btn-primary" type="submit">Update Price</button>
                             </form>
                         </td>
                     </tr>

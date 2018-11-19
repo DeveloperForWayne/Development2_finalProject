@@ -64,6 +64,17 @@ router.delete('/search', isLoggedIn, (req, res, next) => {
     })
 });
 
+router.put('/search', isLoggedIn, (req, res, next) => {
+    request(urlHead + req.body.tickerId + urlTear, { json: true }, (err, response, body) => {
+        if (err) return console.log(err);
+        let totalValue = body.data.quotes.USD.price * req.body.balance;
+        Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerId': req.body.tickerId}, {$set:{ value: totalValue}}, {new: true}, function(err, ticker) {
+            if (err) return console.log(err);
+            res.redirect('search');
+        })
+    });
+});
+
 router.get('/balance', isLoggedIn, (req, res, next) => {
     Ticker.findOne({ 'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.query.tickerName }, (err, ticker) => {
         if (err) console.log(err);
@@ -75,7 +86,7 @@ router.put('/balance', isLoggedIn, (req, res, next) => {
     request(urlHead + req.body.tickerId + urlTear, { json: true }, (err, response, body) => {
         if (err) return console.log(err);
         let totalValue = body.data.quotes.USD.price * req.body.balance;
-        Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName}, {$set:{balance: req.body.balance, value: totalValue}}, {new: true}, function(err, ticker) {
+        Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerId': req.body.tickerId}, {$set:{balance: req.body.balance, value: totalValue}}, {new: true}, function(err, ticker) {
             if (err) return console.log(err);
             res.redirect('search');
         })
