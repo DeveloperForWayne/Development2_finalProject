@@ -51,7 +51,6 @@
                         <tr>
                             <th>Ticker name</th>
                             <th>Balance</th>
-                            <th>Value</th>
                             <th class="td-actions"></th>
                         </tr>
                     </thead>
@@ -64,12 +63,11 @@
                             <td>
                                 <%= ticker[i].balance %>
                             </td>
-                            <td>
-                                <%= ticker[i].value %>
-                            </td>
                             <td class="td-actions">
-                                <form action="/portfolio/confirm" method="post">
+                                <form action="/portfolio/search" method="POST">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
+                                    <input type="hidden" name="_method" value="DELETE" />
                                     <button type="submit" class="btn btn-primary btn-md">Delete</button>
                                 </form>
                             </td>

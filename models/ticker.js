@@ -15,10 +15,7 @@ let tickerSchema = new mongoose.Schema({
     },
     balance: {
         type: Number
-    },
-    value: {
-        type: Number
-    },
+    }
  });
 
 let tickerModel = mongoose.model('Ticker', tickerSchema);

@@ -31,7 +31,6 @@ router.get('/searchResult', isLoggedIn, (req, res, next) => {
 });
 
 router.post('/search', isLoggedIn, (req, res, next) => {
-
     Ticker.findOne({ 'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName }, (err, ticker) => {
         if (err) console.log(err);
         if (ticker) {
@@ -44,7 +43,6 @@ router.post('/search', isLoggedIn, (req, res, next) => {
             newTicker.portfolioName = req.user.portfolioName;
             newTicker.tickerName = req.body.tickerName;
             newTicker.balance = 0;
-            newTicker.value = 0;
     
             newTicker.save((err, result) => {
                 if (err) console.log(err)
@@ -54,9 +52,11 @@ router.post('/search', isLoggedIn, (req, res, next) => {
     })
 });
 
-router.get('/login', (req, res, next) => {
-    const messages = req.flash('error');
-    res.render('user/login', { title, csrfToken: req.csrfToken(), messages });
+router.delete('/search', isLoggedIn, (req, res, next) => {
+    Ticker.findOneAndRemove({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName }, (err, ticker) => {
+		if (err) return console.log(err);
+		res.redirect('search');
+	})
 });
 
 router.post('/login', passport.authenticate('local.login', {
