@@ -18,10 +18,7 @@ const userSchema = new Schema({
     portfolioName: {
         type: String,
         required: true
-    },
-    value: {
-        type: Number
-    },
+    }
 });
 
 userSchema.methods.encryptPassword = function (password) {

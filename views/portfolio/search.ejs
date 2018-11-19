@@ -18,12 +18,13 @@
         <div class="col-12 col-md-10 col-lg-8">
             <form class="card card-sm" action="/portfolio/searchResult" method="Get">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <div class="card-body row no-gutters align-items-center">
+                <div class="card-body row no-gutters align-items-center">
                     <div class="col-auto">
                         <i class="fas fa-search h4 text-body"></i>
                     </div>
                     <div class="col">
-                        <input class="form-control form-control-lg form-control-borderless" name="tokenName" type="search" placeholder="Search tokens">
+                        <input class="form-control form-control-lg form-control-borderless" name="tokenName" type="search"
+                            placeholder="Search tokens">
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-lg btn-success" type="submit">Search</button>
@@ -36,57 +37,65 @@
 
 <% if (ticker != null) {%>
 <% if (ticker.length > 0) {%>
-    <div class="span7">
-        <div class="widget stacked widget-table action-table">
-    
-            <div class="widget-header">
-                <i class="icon-th-list"></i>
-                <h3>Tickers</h3>
-            </div> <!-- /widget-header -->
-    
-            <div class="widget-content">
-    
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Ticker name</th>
-                            <th>Balance</th>
-                            <th class="td-actions"></th>
-                            <th class="td-actions"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(let i=0; i < ticker.length; i++) {%>
-                        <tr>
-                            <td>
-                                <%= ticker[i].tickerName %>
-                            </td>
-                            <td>
-                                <%= ticker[i].balance %>
-                            </td>
-                            <td class="td-actions">
-                                <form action="/portfolio/search" method="POST">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button type="submit" class="btn btn-primary btn-md">Delete</button>
-                                </form>
-                            </td>
-                            <td class="td-actions">
-                                <form action="/portfolio/balance" method="GET">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
-                                    <button type="submit" class="btn btn-primary btn-md">Update Balance</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <% } %>
-                        <% } %>
-                    </tbody>
-                </table>
-    
-            </div> <!-- /widget-content -->
-    
-        </div> <!-- /widget -->
-    </div>
-    <% } %>
+<div class="span7">
+    <div class="widget stacked widget-table action-table">
+
+        <div class="widget-header">
+            <i class="icon-th-list"></i>
+            <h3>Tickers</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <th>Value</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i < ticker.length; i++) {%>
+                    <tr>
+                        <td>
+                            <%= ticker[i].tickerId %>
+                        </td>
+                        <td>
+                            <%= ticker[i].tickerName %>
+                        </td>
+                        <td>
+                            <%= ticker[i].balance %>
+                        </td>
+                        <td>
+                            <%= ticker[i].value %>
+                        </td>
+                        <td>
+                            <form action="/portfolio/search" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="btn btn-primary btn-md">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/portfolio/balance" method="GET">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
+                                <button type="submit" class="btn btn-primary btn-md">Update Balance</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+
+        </div> <!-- /widget-content -->
+
+    </div> <!-- /widget -->
+</div>
+<% } %>

@@ -1,10 +1,13 @@
 const express = require('express');
+const request = require('request');
 const router = express.Router();
 const csrf = require('csurf');
 const passport = require('passport');
 const User = require('../models/user');
 const Post = require('../models/post');
 const Ticker = require('../models/ticker');
+const urlHead = "https://api.coinmarketcap.com/v2/ticker/";
+const urlTear = "/?convert=USD";
 
 const csrfProtect = csrf();
 
@@ -41,8 +44,10 @@ router.post('/search', isLoggedIn, (req, res, next) => {
 
             newTicker.email = req.user.email;
             newTicker.portfolioName = req.user.portfolioName;
+            newTicker.tickerId = req.body.tickerId;
             newTicker.tickerName = req.body.tickerName;
             newTicker.balance = 0;
+            newTicker.value = 0;
 
             newTicker.save((err, result) => {
                 if (err) console.log(err)
@@ -67,10 +72,14 @@ router.get('/balance', isLoggedIn, (req, res, next) => {
 });
 
 router.put('/balance', isLoggedIn, (req, res, next) => {
-    Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName}, {$set:{balance: req.body.balance}}, {new: true}, function(err, ticker) {
+    request(urlHead + req.body.tickerId + urlTear, { json: true }, (err, response, body) => {
         if (err) return console.log(err);
-        res.redirect('search');
-    })
+        let totalValue = body.data.quotes.USD.price * req.body.balance;
+        Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName}, {$set:{balance: req.body.balance, value: totalValue}}, {new: true}, function(err, ticker) {
+            if (err) return console.log(err);
+            res.redirect('search');
+        })
+    });
 });
 
 

@@ -41,6 +41,7 @@
                         <td class="td-actions">
                             <form action="/portfolio/search" method="post">
                                 <input type="hidden" name="tickerName" value="<%= post.name %>">
+                                <input type="hidden" name="tickerId" value="<%= post.id %>">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button type="submit" class="btn btn-primary btn-md">Add</button>
                             </form>
