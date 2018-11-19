@@ -52,6 +52,7 @@
                             <th>Ticker name</th>
                             <th>Balance</th>
                             <th class="td-actions"></th>
+                            <th class="td-actions"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +70,13 @@
                                     <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
                                     <input type="hidden" name="_method" value="DELETE" />
                                     <button type="submit" class="btn btn-primary btn-md">Delete</button>
+                                </form>
+                            </td>
+                            <td class="td-actions">
+                                <form action="/portfolio/balance" method="GET">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="tickerName" value="<%= ticker[i].tickerName %>">
+                                    <button type="submit" class="btn btn-primary btn-md">Update Balance</button>
                                 </form>
                             </td>
                         </tr>

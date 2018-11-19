@@ -34,7 +34,7 @@ router.post('/search', isLoggedIn, (req, res, next) => {
     Ticker.findOne({ 'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName }, (err, ticker) => {
         if (err) console.log(err);
         if (ticker) {
-            message = 'Email is already in use!';
+            message = 'Ticker is already existed!';
             res.render('portfolio/search', { title, csrfToken: req.csrfToken(), portfolioName: req.user.portfolioName, ticker: null, messages: 'Ticker is already existed!' });
         } else {
             const newTicker = new Ticker();
@@ -43,32 +43,36 @@ router.post('/search', isLoggedIn, (req, res, next) => {
             newTicker.portfolioName = req.user.portfolioName;
             newTicker.tickerName = req.body.tickerName;
             newTicker.balance = 0;
-    
+
             newTicker.save((err, result) => {
                 if (err) console.log(err)
-            }); 
+            });
             res.redirect('search');
         }
     })
 });
 
 router.delete('/search', isLoggedIn, (req, res, next) => {
-    Ticker.findOneAndRemove({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName }, (err, ticker) => {
-		if (err) return console.log(err);
-		res.redirect('search');
-	})
+    Ticker.findOneAndRemove({ 'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName }, (err, ticker) => {
+        if (err) return console.log(err);
+        res.redirect('search');
+    })
 });
 
-router.post('/login', passport.authenticate('local.login', {
-    successRedirect: '/user/profile',
-    failureRedirect: '/user/login',
-    failureFlash: true
-}));
-
-router.get('/logout', (req, res, next) => {
-    req.logout();
-    res.redirect('/');
+router.get('/balance', isLoggedIn, (req, res, next) => {
+    Ticker.findOne({ 'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.query.tickerName }, (err, ticker) => {
+        if (err) console.log(err);
+        res.render('portfolio/balance', { title, csrfToken: req.csrfToken(), ticker: ticker});
+    })
 });
+
+router.put('/balance', isLoggedIn, (req, res, next) => {
+    Ticker.findOneAndUpdate({'email': req.user.email, 'portfolioName': req.user.portfolioName, 'tickerName': req.body.tickerName}, {$set:{balance: req.body.balance}}, {new: true}, function(err, ticker) {
+        if (err) return console.log(err);
+        res.redirect('search');
+    })
+});
+
 
 module.exports = router;
 
