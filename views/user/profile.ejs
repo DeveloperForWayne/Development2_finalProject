@@ -1,31 +1,37 @@
 <div class="row">
     <h1>Profile</h1>
-    <div class="col-md-9  admin-content">
+    <div class="col-md-9">
 
-        <div class="panel panel-info" style="margin: 1em;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Name</h3>
+        <div class="card" style="margin: 1em;">
+            <div class="card-header">
+                <h3 class="card-title">Name</h3>
             </div>
-            <div class="panel-body">
-                <%= name %>
-            </div>
-        </div>
-        <div class="panel panel-info" style="margin: 1em;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Email</h3>
-            </div>
-            <div class="panel-body">
-                <%= email %>
+            <div class="card-body">
+                <p class="card-text">
+                    <%= name %>
+                </p>
             </div>
         </div>
-        <div class="panel panel-info" style="margin: 1em;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Portfolio Name:</h3>
+        <div class="card" style="margin: 1em;">
+            <div class="card-header">
+                <h3 class="card-title">Email</h3>
             </div>
-            <div class="panel-body">
-                <%= portfolioName %>
+            <div class="card-body">
+                <p class="card-text">
+                    <%= email %>
+            </div>
+        </div>
+        <div class="card" style="margin: 1em;">
+            <div class="card-header">
+                <h3 class="card-title">Portfolio Name</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-title">
+                    <%= portfolioName %>
+                </p>
                 <form action="/portfolio/search" method="Get">
-                <button type="submit" class="btn btn-success btn-sm">Manage</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-primary">Manage</button>
                 </form>
             </div>
         </div>
